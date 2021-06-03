@@ -49,10 +49,65 @@
   // res = arr.splice(1, 2, "zhu","feng")
   // console.log(res, arr)
   // insert m 0 x 从索引n开始一个元素都不删除，把x放到索引m的前面
-  res = arr.splice(1, 0, "added")
-  console.log(res, arr)
+  res = arr.splice(1, 0, "added");
+  console.log(res, arr);
   // 尾部追加
-  arr.splice(arr.length, 0, "aaa" )
+  arr.splice(arr.length, 0, "aaa");
   // 头部追加
-  arr.splice(0, 0, "bbb" )
+  arr.splice(0, 0, "bbb");
+}
+/***********************数组查询拼接 */
+// slice 原数组不变
+// 实现数组查询 从索引n 找到索引m 但是不包含m的地方
+// params n, m
+// return 以新的数组返回， 原数组不变
+{
+  let arr = [1, 2, 3, 4, 5, 6];
+//   let res = arr.slice(1,3)
+//   console.log(res, arr)
+
+//   res = arr.slice(1)
+//   console.log(res, arr)
+
+//   res = arr.slice(0) // 等于数组克隆
+//   console.log(res, arr)
+
+//   res = arr.slice() // 等于数组克隆
+//   console.log(res, arr)
+
+// let res = arr.slice(-1, -2)
+// console.log(res, arr)
+
+// res =arr.slice(2,1)
+// console.log(res, arr)
+
+res = arr.slice(2.8, 3)
+console.log(res, arr)
+}
+
+//concat 数组拼接
+// params 多个任意值
+// return 拼接后的新数组（原数组不变）
+{
+	let ary1 = [1,2,3]
+	let ary2 = [4,5,6]
+	// let res = ary1.concat("p")
+	// console.log(res, ary1)
+
+    // let res = ary1.concat() // 数组的克隆
+	// console.log(res, ary1, res === ary1)
+
+	let res = ary1.concat("p", ary2)
+	console.log(res, ary1)
+}
+
+//toString, 把数组转化为字符串 原数组不变
+// params
+// return 转化后的字符串（原数组不变）
+{
+	let ary = [1,2,3]
+	let res = ary.toString()
+	console.log(res, [1,2,3].join("|"))
+
+	console.log({}.toString.call(ary))
 }
