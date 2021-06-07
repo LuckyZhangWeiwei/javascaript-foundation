@@ -4,11 +4,15 @@ import './index.css';
 import App from './App';
 import ContextWithMemo from "./redux/ContextWithMemo"
 import reportWebVitals from './reportWebVitals';
+import Parent from './react-parent-child-render-test';
+import ReactRouteApp from './react-router-test/demo/App';
 
 ReactDOM.render(
   <React.StrictMode>
     {/* <App /> */}
-    <ContextWithMemo />
+    {/* <ContextWithMemo /> */}
+    {/* <Parent /> */}
+    <ReactRouteApp />
   </React.StrictMode>,
   document.getElementById('root')
 );
