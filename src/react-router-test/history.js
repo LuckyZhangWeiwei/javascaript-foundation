@@ -18,7 +18,7 @@ function createEvents() {
 function createBrowserHistory() {
   const listeners = createEvents();
   let location = {
-    pathname: "/",
+    pathname: window.location.pathname
   };
 
   // 路由变化时的回调
