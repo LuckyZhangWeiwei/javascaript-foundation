@@ -144,8 +144,19 @@
   // console.log(ary);
   console.log("--------------------------");
   ary.sort((a, b) => {
-    console.log(a, b)
-    return a-b
+    console.log(a, b);
+    return a - b;
   });
-  console.log(ary)
+  console.log(ary);
+}
+/************遍历数组**************************/
+// foreach 遍历数组中的每一项
+// params 回调函数
+// return 原来的数组不变
+{
+  let ary = [1, 2, 3, 1, 2, 3];
+  ary.forEach((item, index) => {
+    // item 为当前项 index 为当前项的索引
+    console.log(item, index);
+  });
 }
