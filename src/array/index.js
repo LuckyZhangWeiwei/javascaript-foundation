@@ -159,4 +159,10 @@
     // item 为当前项 index 为当前项的索引
     console.log(item, index);
   });
+
+  console.log("------------------------");
+
+  ary.map((item, index) => {
+    console.log(item, index);
+  });
 }
