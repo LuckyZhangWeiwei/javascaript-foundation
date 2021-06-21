@@ -80,13 +80,12 @@
   console.log(a, b, c);
 }
 
-
 {
   // 数组是引用类型
   var arr = [12, 23];
   function fn(arr) {
     console.log(arr);
-    arr[0] = 100; // 传进来的arr， 修改的是原始的arr 
+    arr[0] = 100; // 传进来的arr， 修改的是原始的arr
     arr = [100]; // 执行此行时 会再开辟一个内存区 ， 此时的arr 就不是传进来的arr了
     arr[0] = 0;
     console.log(arr);
@@ -132,4 +131,7 @@
   f(5)(6);
   f(7);
   console.log(i);
+}
+
+{
 }
