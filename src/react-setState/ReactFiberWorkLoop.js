@@ -105,5 +105,5 @@ export function batchedUpdate(fn) {
   let prevExecutionContext = executionContext;
   executionContext |= BatchedContext;
   fn();
-  executionContext = prevExecutionContext;
+  executionContext = prevExecutionContext; // 已经重置为非批量了，也就是同步
 }
