@@ -5,41 +5,41 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>rem</title>
-	<style>
-		html {
-			font-size: 20px;
-		}
-		.box {
-			margin: 1rem;
-			width: 5rem;
-			height: 5rem;
-			line-height: 5rem;
-			text-align: center;
-			font-size: 1rem;
-			background-color: lightblue;
-		}
-		.box:nth-child(2) {
-			width: 7.5rem;
-			height: 7.5rem;
-			line-height: 7.5rem;
-		}
-		.box:nth-child(3) {
-			width: 10rem;
-			height: 10rem;
-			line-height: 10rem;
-		}
-	</style>
+    <style>
+      html {
+        font-size: 20px;
+      }
+      .box {
+        margin: 1rem;
+        width: 5rem;
+        height: 5rem;
+        line-height: 5rem;
+        text-align: center;
+        font-size: 1rem;
+        background-color: lightblue;
+      }
+      .box:nth-child(2) {
+        width: 7.5rem;
+        height: 7.5rem;
+        line-height: 7.5rem;
+      }
+      .box:nth-child(3) {
+        width: 10rem;
+        height: 10rem;
+        line-height: 10rem;
+      }
+    </style>
     <script>
       function computedREM() {
         let html = document.documentElement;
         let winW = html.clientWidth;
         // 320 为初始设计稿的宽度， 20 为 1rem = 20 （默认font-size）
-		html.style.fontSize = (winW / 320) * 20 + "px";
+        html.style.fontSize = (winW / 320) * 20 + "px";
       }
 
-	  computedREM()
+      computedREM();
 
-	  window.addEventListener("resize", computedREM)
+      window.addEventListener("resize", computedREM);
     </script>
   </head>
   <body>
