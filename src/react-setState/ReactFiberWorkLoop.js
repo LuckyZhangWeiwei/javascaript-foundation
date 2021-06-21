@@ -1,15 +1,26 @@
 import { ClassComponent, HostRoot } from "./reactWorkTags";
 import { SyncLane } from "./ReactFiberLane";
+import { ConcurrentMode } from "./ReactTypeOfMode";
 
 var syncLanePriority = 12;
 var NoLanePriority = 0;
 
 let syncQueue = [];
+let NoContext = 0;
+let BatchedContext = 1;
+let executionContext = NoContext;
 
 export function scheduleUpdateOnFiber(fiber, lane, eventTime) {
   let root = markUpdateLaneFromFiberToRoot(fiber);
   // 开始创建一个任务， 从根节点开始进行更新
   ensureRootIsScheduled(root);
+
+  if (
+    executionContext === NoContext &&
+    (fiber.mode & ConcurrentMode) === NoMode
+  ) {
+    flushSyncCallbackQueue();
+  }
 }
 
 function markUpdateLaneFromFiberToRoot(fiber) {
@@ -88,4 +99,11 @@ function commitRoot(root) {
 function flushSyncCallbackQueue() {
   syncQueue.forEach((cb) => cb());
   syncQueue.length = 0;
+}
+
+export function batchedUpdate(fn) {
+  let prevExecutionContext = executionContext;
+  executionContext |= BatchedContext;
+  fn();
+  executionContext = prevExecutionContext;
 }
