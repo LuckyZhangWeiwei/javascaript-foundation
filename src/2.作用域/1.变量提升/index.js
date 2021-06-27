@@ -134,4 +134,19 @@
 }
 
 {
+  var a = 456;
+  function test() {
+    var a = "123";
+    return function test2() {
+      console.log(this);
+      return this.a;
+    };
+  }
+  var obj = {
+    a: 789,
+  };
+  var fn = test();
+  // var a = console.log(fn());
+  var a = fn.call(obj);
+  console.log(a);
 }
