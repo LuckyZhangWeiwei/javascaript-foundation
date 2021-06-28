@@ -135,10 +135,11 @@
 
 {
   var a = 456;
+  // console.log(global.a);
   function test() {
     var a = "123";
     return function test2() {
-      console.log(this);
+      console.log(this, this === global);
       return this.a;
     };
   }
@@ -146,7 +147,7 @@
     a: 789,
   };
   var fn = test();
-  // var a = console.log(fn());
-  var a = fn.call(obj);
-  console.log(a);
+  var a = console.log(fn());
+  // var a = fn.call(obj);
+  // console.log(a);
 }
