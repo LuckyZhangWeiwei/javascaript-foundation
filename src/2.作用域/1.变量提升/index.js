@@ -151,3 +151,119 @@
   // var a = fn.call(obj);
   // console.log(a);
 }
+
+{
+  function Test(a) {
+    this.a = a;
+  }
+  Test.prototype.say = function () {
+    console.log(this);
+    console.log(this.a);
+  };
+
+  let test = new Test(1);
+  test.say();
+}
+
+{
+  function Test() {
+    this.fn = function () {
+      console.log(this);
+      setTimeout(() => {
+        console.log(this);
+      }, 1000);
+    };
+  }
+
+  let test = new Test();
+  test.fn();
+}
+
+{
+  let a = 1000;
+  function test() {
+    console.log("this0:", this);
+    let a = 1;
+    setTimeout(() => {
+      console.log(this, this.a);
+    }, 1000);
+  }
+  test();
+}
+{
+  let obj = {
+    fn: (function (n) {
+      console.log("this1:", this);
+      return function () {
+        console.log("this2:", this);
+      };
+    })(10),
+  };
+  obj.fn();
+}
+{
+  function test() {
+    return function () {
+      this.a = 1;
+      setTimeout(() => {
+        console.log(this);
+        console.log(this.a);
+      }, 500);
+    };
+  }
+  test()();
+}
+{
+  var num = 0;
+  function Obj() {
+    this.num = 1;
+    this.getNum = function () {
+      console.log(this.num);
+    };
+    this.getNumLater = function () {
+      setTimeout(function () {
+        console.log(this);
+        console.log(this.num);
+      }, 1000);
+    };
+  }
+  var obj = new Obj();
+  // obj.getNum();
+  obj.getNumLater();
+}
+{
+  var testThis = {
+    a: function () {
+      console.log(this); //{a: ƒ, b: ƒ}
+    },
+    b: function () {
+      setTimeout(function () {
+        console.log(this); //window对象
+      }, 1000);
+    },
+  };
+  testThis.b();
+}
+{
+  function Foo() {
+    this.value = 42;
+    this.method = function () {
+      // this 指向全局对象
+      console.log(this); // 输出window  第二个this
+      console.log(this.value); // 输出：undefined   第二个this
+    };
+    setTimeout(this.method, 500); // this指向Foo的实例对象  第一个this
+  }
+  new Foo();
+}
+{
+  function Foo() {
+    this.value = 42;
+    setTimeout(function () {
+      // this 指向全局对象
+      console.log(this); // 输出window  第二个this
+      console.log(this.value); // 输出：undefined   第二个this
+    }, 500); // this指向Foo的实例对象  第一个this
+  }
+  new Foo();
+}
