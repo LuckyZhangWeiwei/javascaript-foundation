@@ -21,5 +21,5 @@ console.log(function () {});
   console.log(typeof typeof typeof []);
   // typeof []  "object"
   // typeof "object" "string"
-  // typeof "string" "string"
+  // typeof "string" "string", 注意双引号
 }
