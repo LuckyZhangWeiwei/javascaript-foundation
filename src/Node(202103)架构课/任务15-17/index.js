@@ -72,6 +72,7 @@
 
 {
   // 第三方模块 ， 引用没有相对路径
+  // npm 默认在电脑的环境变量，所以可以执行使用， 安装的全局模块在npm下会生成一个一个快捷方式， 只能在命令行运行
   console.log(module.paths); // 会逐级的查找node_modules 的路径
   console.log(module.path);
 }
