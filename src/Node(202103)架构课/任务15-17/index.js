@@ -56,3 +56,22 @@
   // vm.runInThisContext(code("vm, this ctx"));
   vm.runInNewContext(code("vm, new ctx"));
 }
+
+{
+  // 文件模块 引用的是相对路径
+  let result = require("./debug-code/c");
+  console.log(result);
+}
+
+{
+  // 文件模块的查找规范， 最新版本nodejs 默认先查找 js 然后是文件夹（作为包处理， 包必须有package.json），文件夹 中找package.json 的main 节点, 如果找不到 找index文件
+  // 具体参考 <require 文件模块查找规则.PNG>
+  const jquery = require("./jquery");
+  console.log("jquery:", jquery);
+}
+
+{
+  // 第三方模块 ， 引用没有相对路径
+  console.log(module.paths); // 会逐级的查找node_modules 的路径
+  console.log(module.path);
+}
