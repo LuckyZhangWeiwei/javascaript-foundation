@@ -28,9 +28,9 @@ EventEmitter.prototype.off = function (eventName, callback) {
 };
 
 EventEmitter.prototype.once = function (eventName, callback) {
-  // AOP 切片
+  // AOP
   const one = () => {
-    callback();
+    callback(); //切片编程就是增加逻辑
     this.off(eventName, one);
   };
   one.l = callback; // 自定义属性 做关联
