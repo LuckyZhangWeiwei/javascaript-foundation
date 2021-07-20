@@ -25,17 +25,17 @@ const shopping = () => {
   console.log("shopping");
 };
 
-// girl.on("lovelorn", cry);
+girl.on("lovelorn", cry);
 
-// girl.on("lovelorn", eat);
+girl.on("lovelorn", eat);
 
 girl.once("lovelorn", shopping);
 
 setTimeout(() => {
   girl.off("lovelorn", shopping);
   girl.emit("lovelorn");
-  // girl.off("lovelorn", cry);
-  // girl.emit("lovelorn");
+  girl.off("lovelorn", cry);
+  girl.emit("lovelorn");
 }, 2000);
 
 // 继承 实例属性， 继承原型属性

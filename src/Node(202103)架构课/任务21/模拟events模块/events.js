@@ -2,7 +2,7 @@ function EventEmitter() {
   this._events = {};
 }
 
-EventEmitter.prototype.on = (eventName, callback) => {
+EventEmitter.prototype.on = function (eventName, callback) {
   if (!this._events) {
     this._events = {};
   }
@@ -13,13 +13,13 @@ EventEmitter.prototype.on = (eventName, callback) => {
   }
 };
 
-EventEmitter.prototype.emit = (eventName, ...args) => {
+EventEmitter.prototype.emit = function (eventName, ...args) {
   this._events[eventName].forEach((fn) => {
     fn(...args);
   });
 };
 
-EventEmitter.prototype.off = (eventName, callback) => {
+EventEmitter.prototype.off = function (eventName, callback) {
   if (this._events && this._events[eventName]) {
     this._events[eventName] = this._events[eventName].filter(
       (fn) => fn !== callback && fn.l !== callback
@@ -28,7 +28,7 @@ EventEmitter.prototype.off = (eventName, callback) => {
 };
 
 EventEmitter.prototype.once = function (eventName, callback) {
-  // AOP
+  // AOP 切片
   const one = () => {
     callback();
     this.off(eventName, one);
