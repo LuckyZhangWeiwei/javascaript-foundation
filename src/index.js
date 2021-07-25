@@ -7,15 +7,17 @@ import reportWebVitals from "./reportWebVitals";
 // import Parent from './react-parent-child-render-test';
 // import ReactRouteApp from './react-router-test/demo/App';
 
-import { Provider } from "./react-redux-learning/my-react-redux";
-import store from "./react-redux-learning/store";
-import App from "./react-redux-learning/App";
-import TestContext from "./react-redux-learning/TestContext";
-import Counter from "./react-setState";
+// import { Provider } from "./react-redux-learning/my-react-redux";
+// import store from "./react-redux-learning/store";
+// import App from "./react-redux-learning/App";
+// import TestContext from "./react-redux-learning/TestContext";
+// import Counter from "./react-setState";
 
-const setting = {
-  color: "#d89151",
-};
+import ClosureTrap from "./react-closuretrap/closuretrap";
+
+// const setting = {
+//   color: "#d89151",
+// };
 
 ReactDOM.render(
   <React.StrictMode>
@@ -28,7 +30,8 @@ ReactDOM.render(
         <App />
       </TestContext.Provider>
     </Provider> */}
-    <Counter />
+    {/* <Counter /> */}
+    <ClosureTrap />
   </React.StrictMode>,
   document.getElementById("root")
 );
