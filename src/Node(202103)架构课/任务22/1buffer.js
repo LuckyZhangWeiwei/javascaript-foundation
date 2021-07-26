@@ -53,6 +53,8 @@ const { Console } = require("console");
   // 10进制 255 11111111 （2进制） 0xff 16进制， 所以buffer 的取值范围 0 - 0xff
   // node 中buffer 可以和字符串相互转化（可能会出现乱码）
   // 编码规范 ASCII -> GBK -> unicode -> utf8
+  // GBK 一个汉字是2个字节
+  // UTF8 一个汉字3个字节
   // nodejs buffer 编码全部统一为utf8 不支持其他编码
   // buffer 代表的是内存，内存是一段固定的空间， 产生的内存是固定的大小，不能随意添加
   // 扩容的概念 要动态创建一个新的内容，把内容迁移过去
