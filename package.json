@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/node": "^16.4.3",
     "axios": "^0.21.1",
     "commander": "^8.0.0",
     "cra-template": "1.1.2",
