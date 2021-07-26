@@ -145,5 +145,9 @@ const { Console } = require("console");
   let buf0 = Buffer.from("架构");
   let buf1 = Buffer.from("珠");
   let buf2 = Buffer.from("峰");
-  console.log(Buffer.concat([buf0, buf1, buf2]).toString());
+  let bigBuffer = Buffer.concat([buf0, buf1, buf2]);
+  console.log(bigBuffer.toString());
+  // 字节长度
+  console.log(bigBuffer.byteLength, bigBuffer.length);
+  console.log(Buffer.isBuffer(bigBuffer));
 }
