@@ -49,8 +49,12 @@
     .then((x) => {
       return new Error("error");
     })
-    .catch(() => 1)
-    .then((x) => x + 1)
+    .catch(() => {
+      return 1;
+    })
+    .then((x) => {
+      return x + 1;
+    })
     .then((x) => console.log(x))
     .catch(console.error);
 }
