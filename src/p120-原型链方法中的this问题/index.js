@@ -83,3 +83,13 @@
   console.log(s1);
   s1.showName();
 }
+{
+  //多态
+  function Behavior() {}
+  Behavior.prototype.sound = function (sound) {
+    return sound;
+  };
+  function Dog() {}
+  Object.setPrototypeOf(Dog.prototype, Behavior.prototype);
+  console.log(Dog.prototype);
+}
