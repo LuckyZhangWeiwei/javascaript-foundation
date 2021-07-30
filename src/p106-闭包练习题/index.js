@@ -6,7 +6,7 @@ function fn() {
   };
 }
 var f = fn();
-console.log(f(5)); // 6
-console.log(fn()(5)); // 7
-console.log(f(5)); // 8
-console.log(a); // 3
+console.log(f(5));
+console.log(fn()(5));
+console.log(f(5));
+console.log(a);
