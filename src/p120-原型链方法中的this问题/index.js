@@ -93,3 +93,25 @@
   Object.setPrototypeOf(Dog.prototype, Behavior.prototype);
   console.log(Dog.prototype);
 }
+{
+  class Parent {
+    constructor() {
+      this.name = "parent";
+      this.work = function () {
+        console.log(`${this.name} work`);
+      };
+    }
+  }
+  class Child extends Parent {
+    constructor() {
+      super();
+      this.name = "child";
+      this.study = function () {
+        console.log(`${this.name} study`);
+      };
+    }
+  }
+
+  let xiaoming = new Child();
+  console.log(xiaoming);
+}
