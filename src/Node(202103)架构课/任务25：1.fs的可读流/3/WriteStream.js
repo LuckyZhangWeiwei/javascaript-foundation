@@ -24,6 +24,7 @@ console.log(flag3);
 let flag4 = ws.write("4");
 console.log(flag4);
 ws.end(); // write + close
+
 // 由于write方法是异步操作，所以如果多个write方法同时操作一个文件，就会出现错误
 // 除了第一次的write写入文件，其他write操作插入队列，第一个完成后，清空缓存区
 // 如果缓存区过大会导致浪费内存，所以会设置一个预期值进行控制，达到预期值后就不要进行write 操作
@@ -38,12 +39,14 @@ ws.end(); // write + close
   const ws = fs.createWriteStream(
     "./src/Node(202103)架构课/任务25：1.fs的可读流/3/b.txt",
     {
-      highWaterMark: 2, // 默认16k
+      highWaterMark: 4, // 默认16k
     }
   );
 
   rs.on("data", function (data) {
+    console.log(data.toString());
     let flag = ws.write(data);
+    console.log(flag);
     if (!flag) {
       // 避免往stack 中写入，浪费内存
       console.log("吃不下了");
