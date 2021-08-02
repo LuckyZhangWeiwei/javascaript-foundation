@@ -11,7 +11,7 @@
       // "skipFiles": [
       //   "<node_internals>/**"
       // ],
-      "program": "./src/Node(202103)架构课/任务21/events.js"
+      "program": "./src/react hooks/index.js"
     }
   ]
 }
