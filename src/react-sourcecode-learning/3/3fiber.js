@@ -4,11 +4,18 @@ let nextUnitOfWork = null; // 下一个执行单元
 function workLoop() {
   // 如果有待执行的执行单元,就执行，然后返回下一个执行单元
   while (nextUnitOfWork) {
+    // while (
+    //   (deadline.timeRemaining() > 1 || deadline.didTimeout) &&
+    //   nextUnitOfWork
+    // ) {
     nextUnitOfWork = performUnitOfWork(nextUnitOfWork);
   }
   if (!nextUnitOfWork) {
     console.log("render阶段结束");
   }
+  //  else {
+  //   requestIdleCallback(workLoop, { timeout: 1000 });
+  // }
 }
 
 // 刚开始A1
@@ -40,3 +47,5 @@ function completeUnitOfWork(fiber) {
 
 nextUnitOfWork = rootFiber;
 workLoop();
+
+// requestIdleCallback(workLoop, { timeout: 1000 });
