@@ -10,3 +10,5 @@ export const TAG_TEXT = Symbol.for("TAG_TEXT");
 export const PLACEMENT = Symbol.for("PLACEMENT");
 export const UPDATE = Symbol.for("UPDATE");
 export const DELETE = Symbol.for("DELETE");
+
+// 文本节点 fiber {tag: TAG_TEXT, type: ELEMENT_TEXT}

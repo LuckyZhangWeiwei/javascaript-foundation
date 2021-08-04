@@ -13,6 +13,8 @@ import {
   PLACEMENT,
 } from "./constants";
 
+import { setProps } from "./utils";
+
 /*
  let rootFiber = {
     tag: TAG_ROOT,
@@ -22,6 +24,7 @@ import {
  */
 let nextUnitOfWork = null; // 下一个工作单元
 let workInProgressRoot = null; // RootFiber应用的根
+
 function scheduleRoot(rootFiber) {
   workInProgressRoot = rootFiber;
   nextUnitOfWork = rootFiber;
@@ -45,20 +48,20 @@ requestIdleCallback(workLoop, { timeout: 500 });
 
 function performUnitOfWork(currentFiber) {
   beginWork(currentFiber); //处理此fiber
-  // // 如果有儿子，则返回大儿子
-  // if (currentFiber.child) {
-  //   return currentFiber.child;
-  // }
-  // // 走到这，说明没有儿子,则此fiber已经完成
-  // while (currentFiber) {
-  //   completeUnitOfWork(currentFiber); // 此fiber遍历结束
-  //   // 如果没有儿子，怎开始找弟弟
-  //   if (currentFiber.sibling) {
-  //     return currentFiber.sibling;
-  //   }
-  //   // 没有儿子，在找叔叔，-> 先找到父亲，再找父亲的弟弟
-  //   currentFiber = currentFiber.return;
-  // }
+  // 如果有儿子，则返回大儿子
+  if (currentFiber.child) {
+    return currentFiber.child;
+  }
+  // 走到这，说明没有儿子,则此fiber已经完成
+  while (currentFiber) {
+    completeUnitOfWork(currentFiber); // 此fiber遍历结束
+    // 如果没有儿子，怎开始找弟弟
+    if (currentFiber.sibling) {
+      return currentFiber.sibling;
+    }
+    // 没有儿子，在找叔叔，-> 先找到父亲，再找父亲的弟弟
+    currentFiber = currentFiber.return;
+  }
 }
 
 // 创建真实的dom
@@ -66,6 +69,11 @@ function performUnitOfWork(currentFiber) {
 function beginWork(currentFiber) {
   if (currentFiber.tag === TAG_ROOT) {
     updateHostRoot(currentFiber);
+  } else if (currentFiber.tag === TAG_TEXT) {
+    updateHostText(currentFiber);
+  } else if (currentFiber.tag === TAG_HOST) {
+    // 原生dom节点
+    updateHostComponent(currentFiber);
   }
 }
 
@@ -74,6 +82,39 @@ function updateHostRoot(currentFiber) {
   reconcileChildren(currentFiber, newChildren);
 }
 
+function updateHostText(currentFiber) {
+  // 如果此fiber没有创建dom节点
+  if (!currentFiber.stateNode) {
+    currentFiber.stateNode = createDOM(currentFiber);
+  }
+}
+
+function updateHostComponent(currentFiber) {
+  if (!currentFiber.stateNode) {
+    currentFiber.stateNode = createDOM(currentFiber);
+  }
+  const newChildren = currentFiber.props.children;
+  reconcileChildren(currentFiber, newChildren);
+}
+
+function createDOM(currentFiber) {
+  if (currentFiber.tag === TAG_TEXT) {
+    // 文本节点
+    return document.createTextNode(currentFiber.props.text);
+  } else if (currentFiber.tag === TAG_HOST) {
+    // 原生dom节点 span div
+    let stateNode = document.createElement(currentFiber.type);
+    updateDOM(stateNode, {}, currentFiber.props); // 更新dom 的属性
+    return stateNode;
+  }
+}
+
+function updateDOM(stateNode, oldProps, newProps) {
+  setProps(stateNode, oldProps, newProps);
+}
+
+// currentFiber 父fiber
+// newChildren 为父fiber 下的子节点 虚拟dom
 function reconcileChildren(currentFiber, newChildren) {
   let newChildIndex = 0; // 新的子节点的索引
   let prevSibling; // 上一个新的子fiber
@@ -96,6 +137,16 @@ function reconcileChildren(currentFiber, newChildren) {
       nextEffect: null, // effect list是单链表
       // effect list 的顺序很完成顺序一致
     };
+    // 最新的儿子没有弟弟
+    if (newFiber) {
+      if (newChildIndex === 0) {
+        // 当前索引为0， 说明是太子
+        currentFiber.child = newFiber;
+      } else {
+        prevSibling.sibling = newFiber; // 让太子的sibling弟弟指向二皇子
+      }
+      prevSibling = newFiber;
+    }
     newChildIndex++;
   }
 }
