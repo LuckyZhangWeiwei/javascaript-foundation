@@ -25,7 +25,7 @@ import { setProps } from "./utils";
 let nextUnitOfWork = null; // 下一个工作单元
 let workInProgressRoot = null; // RootFiber应用的根
 
-function scheduleRoot(rootFiber) {
+export function scheduleRoot(rootFiber) {
   workInProgressRoot = rootFiber;
   nextUnitOfWork = rootFiber;
 }
@@ -36,8 +36,9 @@ function workLoop(deadline) {
     nextUnitOfWork = performUnitOfWork(nextUnitOfWork); // 执行完一个任务后
     shouldYield = deadline.timeRemaining() < 1; // 没有时间了，要让出控制权
   }
-  if (!nextUnitOfWork) {
+  if (!nextUnitOfWork && workInProgressRoot) {
     console.log("render阶段结束");
+    commitRoot();
   } else {
     // 如果还有任务，则向浏览器申请时间片，再次调度
     requestIdleCallback(workLoop, { timeout: 500 });
@@ -151,7 +152,53 @@ function reconcileChildren(currentFiber, newChildren) {
   }
 }
 
-// 搜集effect
-function completeUnitOfWork(fiber) {
-  console.log("结束：", fiber.key);
+// 搜集effect 然后组成effect list
+// 每个fiber 有两个属性 first effect 指向第一个有副作用的子fiber， last effect 指向最后一个有副作用的fiber
+// 中间的用next effect 链接 形成一个单链表
+function completeUnitOfWork(currentFiber) {
+  // current B1
+  let returnFiber = currentFiber.return;
+  if (returnFiber) {
+    // 把b1 的first last 给A
+    // 把自己儿子的链 挂到父亲身上
+    if (!returnFiber.firstEffect) {
+      returnFiber.firstEffect = currentFiber.firstEffect;
+    }
+    if (!!currentFiber.lastEffect) {
+      if (returnFiber.lastEffect) {
+        returnFiber.lastEffect.nextEffect = currentFiber.firstEffect;
+      } else {
+        returnFiber.lastEffect = currentFiber.lastEffect;
+      }
+    }
+    //把自己挂到父亲身上
+    const effectTag = currentFiber.effectTag;
+    if (effectTag) {
+      if (returnFiber.lastEffect) {
+        returnFiber.lastEffect.nextEffect = currentFiber;
+      } else {
+        returnFiber.firstEffect = currentFiber;
+      }
+      returnFiber.lastEffect = currentFiber;
+    }
+  }
+}
+
+function commitRoot() {
+  let currentFiber = workInProgressRoot.firstEffect;
+  while (currentFiber) {
+    commitWork(currentFiber);
+    currentFiber = currentFiber.nextEffect;
+  }
+  workInProgressRoot = null;
+}
+
+function commitWork(currentFiber) {
+  if (!currentFiber) return;
+  let returnFiber = currentFiber.return;
+  let returnDOM = returnFiber.stateNode;
+  if (currentFiber.effectTag === PLACEMENT) {
+    returnDOM.appendChild(returnFiber.stateNode);
+  }
+  currentFiber.effectTag = null;
 }
