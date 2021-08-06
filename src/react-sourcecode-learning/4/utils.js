@@ -1,4 +1,4 @@
-export function setProps(stateNode, oldProps, newProps) {
+export function setProps(dom, oldProps, newProps) {
   for (let key in oldProps) {
   }
   for (let key in newProps) {
