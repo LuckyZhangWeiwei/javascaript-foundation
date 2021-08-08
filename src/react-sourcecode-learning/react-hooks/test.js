@@ -33,11 +33,12 @@ function useState(initialState) {
         const [num, updateNum1] = useState(1);
         const [num, updateNum2] = useState(2);
       */
-      fiber.memoizedState.next = hook;
+      workingInProgressHook.next = hook;
     }
     workingInProgressHook = hook;
   } else {
     hook = workingInProgressHook;
+    // console.log(hook);
     workingInProgressHook = workingInProgressHook.next;
   }
 
@@ -97,16 +98,16 @@ function schedule() {
 
 function App() {
   const [num, updateNum] = useState(0);
-  const [num, updateNum1] = useState(1);
-  const [num, updateNum2] = useState(2);
+  const [num1, updateNum1] = useState(1);
+  // const [num2, updateNum2] = useState(2);
   return {
     onClick() {
       updateNum((num) => num + 1);
       updateNum((num) => num + 2);
-      updateNum((num) => num + 3);
+      // updateNum((num) => num + 3);
     },
   };
 }
 
-window.app = schedule();
+global.app = schedule();
 app.onClick();

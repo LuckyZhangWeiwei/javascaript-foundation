@@ -11,7 +11,7 @@
       // "skipFiles": [
       //   "<node_internals>/**"
       // ],
-      "program": "./src/react hooks/index.js"
+      "program": "./src/react-sourcecode-learning/react-hooks/test.js"
     }
   ]
 }
