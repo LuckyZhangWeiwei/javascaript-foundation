@@ -63,6 +63,7 @@
 
   function Counter() {
     const [count, setCount] = myReact.useState(0); // 闭包
+    console.log("count in Counter:", count);
     return {
       click: () => setCount(count + 1),
       _render: () => console.log("render:", { count }),
@@ -72,9 +73,9 @@
   let App;
   App = myReact.render(Counter); // render: { count: 0 }
   App.click();
-  App = myReact.render(Counter); // render: { count: 1 }
-  App.click();
-  App = myReact.render(Counter); // render: { count: 2 }
+  // App = myReact.render(Counter); // render: { count: 1 }
+  // App.click();
+  // App = myReact.render(Counter); // render: { count: 2 }
 }
 {
   const MyReact = (function () {
@@ -107,14 +108,17 @@
 
   function Counter() {
     const [count, setCount] = MyReact.useState(0);
+
     // MyReact.useEffect(() => {
     //   console.log("effect", count);
     // }, [count]);
+
     MyReact.useEffect(() => {
       setInterval(() => {
         console.log("effect", count);
       }, 1000);
     }, [count]);
+
     return {
       click: () => setCount(count + 1),
       noop: () => setCount(count),
@@ -129,12 +133,12 @@
   App = MyReact.render(Counter);
   // effect 1
   // render {count: 1}
-  App.noop();
-  App = MyReact.render(Counter);
+  // App.noop();
+  // App = MyReact.render(Counter);
   // // no effect run
   // render {count: 1}
-  App.click();
-  App = MyReact.render(Counter);
+  // App.click();
+  // App = MyReact.render(Counter);
   // effect 2
   // render {count: 2}
 }
